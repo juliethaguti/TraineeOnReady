@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <script src="./vehiculo.js"></script>
+    <script src="./moto.js"></script>
+    <script src="./auto.js"></script> -->
+</head>
+<body>
+    <script>
+        var vehiculo = {
+            marca: '',
+            modelo : '',
+            precio : 0,
+
+            init: function (marca, modelo, precio) {
+                this.marca = marca;
+                this.modelo = modelo;
+                this.precio = precio;
+            },
+            mostrar: function () {
+                console.log('Marca : '+ this.marca + ' // Modelo: ' + this.modelo + ' // Precio: '+
+                new Intl.NumberFormat('en', {style: 'currency',currency: 'USD'}).format(this.precio));
+                
+            },
+
+            vehiculoMasCaro : function( vehiculos){
+                var vehiculoMasCaro = null;
+                vehiculos.forEach(element =>{
+                    if(vehiculoMasCaro == null){
+                        vehiculoMasCaro = element;
+                    }
+                    else{
+                        if(element.precio > vehiculoMasCaro.precio){
+                            vehiculoMasCaro = element;
+                        }
+                    }
+                });
+
+                return vehiculoMasCaro;
+            },
+
+            vehiculoMasBarato : function( vehiculos){
+                var vehiculoMasBarato = null;
+                vehiculos.forEach(element =>{
+                    if(vehiculoMasBarato == null){
+                        vehiculoMasBarato = element;
+                    }
+                    else{
+                        if(element.precio < vehiculoMasBarato.precio){
+                            vehiculoMasBarato = element;
+                        }
+                    }
+                });
+
+                return vehiculoMasBarato;
+            },
+
+            buscarOcurrenciaModelo : function( vehiculos , letra){
+                var vehiculoAux = undefined;
+                vehiculos.forEach(element =>{
+                    if(element.modelo.includes(letra)){
+                        vehiculoAux = element;
+                    }
+                });
+
+                return vehiculoAux;
+            },
+
+            
+        };
+
+        var moto = Object.create(vehiculo, {
+            cilindrada: {
+                get: function(){
+                    return this. value
+                },
+                set : function(newValue){
+                    this.value = newValue;
+                }
+            },
+            init: {
+                value: function(marca, modelo, precio, cilindrada){
+                    vehiculo.init.call(this, marca, modelo, precio);
+                    this. cilindrada = cilindrada;
+
+                    return this;
+                }
+            }, 
+            
+            mostrar :{
+                value: function(){
+            console.log('Marca : '+ this.marca + ' // Modelo: ' + this.modelo + ' // Cilindrada: ' + this.cilindrada + 
+            ' // Precio: '+ new Intl.NumberFormat('en', {style: 'currency',currency: 'USD'}).format(this.precio));
+        }
+    }
+        });
+
+    var auto = Object.create(vehiculo, {
+            puertas: {
+                get: function(){
+                    return this. value
+                },
+                set : function(newValue){
+                    this.value = newValue;
+                }
+            },
+            init: {
+                value: function(marca, modelo, precio, puertas){
+                    vehiculo.init.call(this, marca, modelo, precio);
+                    this.puertas = puertas;
+
+                    return this;
+                }
+            }, 
+            
+            mostrar :{
+                value: function(){
+            console.log('Marca : '+ this.marca + ' // Modelo: ' + this.modelo + ' // Puertas: ' + this.puertas +
+             ' // Precio: '+ new Intl.NumberFormat('en', {style: 'currency',currency: 'USD'}).format(this.precio));
+        }
+    }
+});
+
+var moto1 = Object.create(moto).init('Honda','Titan', 60000.00, '125cc');
+var auto1 = Object.create(auto).init('Peugeot', '206', 200000.00, 4);
+var moto2 = Object.create(moto).init('Yamaha','YBR', 80500.50, '160cc');
+var auto2 = Object.create(auto).init('Peugeot', '208', 250000.00, 5);
+
+var vehiculos = [auto1,moto1,auto2,moto2];
+
+vehiculos.forEach(element => {
+    element.mostrar();
+});
+
+vehiculoCaro = vehiculo.vehiculoMasCaro(vehiculos);
+
+console.log('==========================');
+
+console.log('Vehículo más caro: '+ vehiculoCaro.marca + ' ' + vehiculoCaro.modelo);
+
+vehiculoBarato = vehiculo.vehiculoMasBarato(vehiculos);
+
+console.log('Vehículo más barato: '+ vehiculoBarato.marca + ' ' + vehiculoBarato.modelo);
+vehiculoConLaLetra = vehiculo.buscarOcurrenciaModelo(vehiculos, 'Y');
+console.log('Vehículo que contiene en el modelo la letra ‘Y’:' + vehiculoConLaLetra.marca + ' '+ vehiculoConLaLetra.modelo + ' ' + vehiculoConLaLetra.precio);
+
+console.log('==========================');
+
+vehiculos.sort();
+
+vehiculos.sort(function(a, b){return b.precio - a.precio});
+
+vehiculos.forEach(element => {
+    console.log(element.marca + ' ' + element.modelo);
+});
+
+console.log('==========================');
+
+var autos = [auto1,auto2]; 
+console.log('Lista de autos');
+autos.forEach(element => {
+    element.mostrar();
+});
+
+
+
+    </script>
+</body>
+</html>
